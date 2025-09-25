@@ -1,0 +1,62 @@
+To serve static HTML files in an Express.js application, you can use the built-in middleware express.static() or the res.sendFile() method. Here's how you can do it:
+
+1. Using express.static() Middleware
+This is the simplest way to serve static files, including HTML, CSS, JavaScript, and images.
+Javascriptconst express = require('express');
+const path = require('path');
+
+const app = express();
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+
+
+Place your HTML files (e.g., index.html) in the public directory.
+Access the file directly in the browser, e.g., http://localhost:3000/index.html.
+
+
+2. Using res.sendFile()
+This method allows you to send a specific HTML file as a response.
+Javascriptconst express = require('express');
+const path = require('path');
+
+const app = express();
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+
+
+Here, the index.html file is located in the public directory.
+When users visit the root URL (/), the server sends the index.html file.
+
+
+3. Combining Both Approaches
+You can use express.static() for general static files and res.sendFile() for specific routes.
+Javascriptconst express = require('express');
+const path = require('path');
+
+const app = express();
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve a specific HTML file for a route
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'about.html'));
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+
+
+These methods are flexible and allow you to serve static HTML files efficiently in your Express.js application.

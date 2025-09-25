@@ -1,0 +1,38 @@
+To enable a "watch" functionality for an Express.js application, you can use tools like Nodemon. Nodemon automatically restarts your server whenever it detects changes in your files, making development smoother and more efficient.
+Here’s how you can set it up:
+
+1. Install Nodemon
+Run the following command to install Nodemon globally or as a development dependency:
+Bashnpm install -g nodemon
+# OR
+npm install --save-dev nodemon
+
+
+2. Update Your Start Script
+Modify the scripts section in your package.json file to use Nodemon:
+Json"scripts": {
+  "start": "node app.js",
+  "watch": "nodemon app.js"
+}
+
+Now, you can start your server in watch mode by running:
+Bashnpm run watch
+
+
+3. Run Nodemon Directly
+Alternatively, you can run Nodemon directly without modifying package.json:
+Bashnodemon app.js
+
+
+4. Customize Nodemon (Optional)
+You can create a nodemon.json file in your project root to customize its behavior. For example:
+Json{
+  "watch": ["server", "routes"],
+  "ext": "js,json",
+  "ignore": ["node_modules"],
+  "exec": "node app.js"
+}
+
+This configuration watches specific directories (server, routes), monitors .js and .json files, and ignores node_modules.
+
+With this setup, your Express.js server will automatically restart whenever you make changes to your code. This saves time and improves your development workflow!
