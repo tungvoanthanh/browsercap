@@ -12,7 +12,7 @@ function getSupportedConstraints() {
     let scHtml = "";
     const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
     for (const constraint of Object.keys(supportedConstraints)) {
-        scHtml += `+${constraint}<br>`;
+        scHtml += `[${constraint}]`;
     }
 
     return `
