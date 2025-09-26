@@ -1,14 +1,29 @@
 function getAllDeviceInfo() {
-    document.getElementById("deviceList").innerHTML = "";
+    document.getElementById("deviceList").innerHTML = getSupportedConstraints();
 
     navigator.mediaDevices.enumerateDevices().then((devices) => {
         devices.forEach((device) => {
-            printDeviceInfo(device); // an InputDeviceInfo object if the device is an input device, otherwise a MediaDeviceInfo object.
+            document.getElementById("deviceList").innerHTML += getDeviceInfo(device);
         });
     });
 }
 
-function printDeviceInfo(device) {
+function getSupportedConstraints() {
+    let scHtml = "";
+    const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+    for (const constraint of Object.keys(supportedConstraints)) {
+        scHtml += `+${constraint}<br>`;
+    }
+
+    return `
+        <fieldset>
+            <legend><b>Supported Constraints</b></legend>
+            ${scHtml}
+        </fieldset>
+    `;
+}
+
+function getDeviceInfo(device) {
     let infoHtml = "";
     for (const key in device) {
         if (typeof(device[key]) == "string") {
@@ -30,12 +45,10 @@ function printDeviceInfo(device) {
         `;
     }
 
-    const deviceName = device.label;
-    let deviceHtml = `
+    return `
         <fieldset>
-            <legend><b>${deviceName}</b></legend>
+            <legend><b>${device.label}</b></legend>
             ${infoHtml}
         </fieldset>
     `;
-    document.getElementById("deviceList").innerHTML += deviceHtml;
 }
